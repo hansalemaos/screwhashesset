@@ -80,7 +80,7 @@ class ScrewHashesSet(Set):
         for o in other:
             if not self._isin(o):
                 tmpelements.append(o)
-        return ScrewHashesSet(tmpelements + self.elements.copy())
+        return self.__class__(tmpelements + self.elements.copy())
 
     def _isin(self, o):
         """
@@ -120,9 +120,9 @@ class ScrewHashesSet(Set):
             ScrewHashesSet: A shallow copy of the ScrewHashesSet.
         """
         try:
-            return ScrewHashesSet(deepcopy(self.elements))
+            return self.__class__(deepcopy(self.elements))
         except Exception:
-            return ScrewHashesSet(copy(self.elements))
+            return self.__class__(copy(self.elements))
 
     def _convert_all_iters(self, *others):
         """
@@ -136,8 +136,8 @@ class ScrewHashesSet(Set):
         """
         allothers = deque([])
         for other in others:
-            if not isinstance(other, ScrewHashesSet):
-                other = ScrewHashesSet(other)
+            if not isinstance(other, self.__class__):
+                other = self.__class__(other)
             allothers.append(other)
         return allothers
 
